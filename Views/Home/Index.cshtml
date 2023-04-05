@@ -1,0 +1,152 @@
+﻿@using Shopping_Checkout.Models
+
+@model Products
+
+@{
+    ViewBag.Title = "Index";
+}
+@using (Html.BeginForm("AddItemsToCart", "Home"))
+{
+    <h2>Checkout System</h2>
+
+    <div style="width: 100%">
+        <table>
+            <tr>
+                <td style="width: 50%">
+                    <table border="1">
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Price per unit</th>
+                        </tr>
+                        <tr>
+                            <td>Super iPad</td>
+                            <td>$549.99</td>
+                        </tr>
+                        <tr>
+                            <td>MacBook Pro</td>
+                            <td>$1399.99</td>
+                        </tr>
+                        <tr>
+                            <td>Apple TV</td>
+                            <td>$109.50</td>
+                        </tr>
+                        <tr>
+                            <td>VGA adapter</td>
+                            <td>$30.00</td>
+                        </tr>
+                    </table>
+                    <br />
+                    <div>
+                        @Html.HiddenFor(m => m.ProductName, new { @id = "hiddenProductSelectedName" })
+
+                        @Html.DropDownList("Products", new SelectList(Model.productsList, "Value", "Text"), "-- Select Product--", new { required = true, @class = "form-control", @id = "ddlProducts" })
+                        @Html.DropDownList("Quantity", new SelectList(Model.productsQuantityList, "Value", "Text"), "-- Select Quantity --", new { required = true, @class = "form-control", @id = "ddlProductsQty" })
+                        @Html.DropDownList("Offers", new SelectList(Model.selectOffers, "Value", "Text", 4), "-- Select Offer --", new { @id = "ddlOffers" })
+                        
+                        @*<table border="1" style="border-width: thin;">
+                            <tr>
+                                <td>@Html.CheckBoxFor(m => m.chkIPD, new { @id = "chkIPD",name="Products",value="Super IPad"}) Super IPad </td>
+                                <td>@Html.DropDownList("IPD_Quantity1", new SelectList(Model.productsQuantityList, "Value", "Text"), "-- Select Quantity --", new { @id = "ddlProductsQty" })</td>
+                                <td colspan="4">
+                                    @Html.DropDownList("Offers", new SelectList(Model.selectOffers, "Value", "Text", 4), "-- Select Offer --", new { @id = "ddlOffers" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>@Html.CheckBoxFor(m => m.chkMBP, new { @id = "chkMBP",name="Products", value="MacBook Pro"}) MacBook Pro </td>
+                                <td>@Html.DropDownList("MBP_Quantity2", new SelectList(Model.productsQuantityList, "Value", "Text"), "-- Select Quantity --", new { @id = "ddlProductsQty" })</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.CheckBoxFor(m => m.chkATV, new { @id = "chkATV",name="Products", value="Apple TV" }) Apple TV </td>
+                                <td>@Html.DropDownList("ATV_Quantity", new SelectList(Model.productsQuantityList, "Value", "Text"), "-- Select Quantity --", new { @id = "ddlProductsQty" })</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.CheckBoxFor(m => m.chkVGA, new { @id = "chkVGA", name="Products", value="VGA adapter"}) VGA adapter </td>
+                                <td>@Html.DropDownList("VGA_Quantity", new SelectList(Model.productsQuantityList, "Value", "Text"), "-- Select Quantity --", new { @id = "ddlProductsQty" })</td>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </table>*@
+                        <br />
+                        <input id="Submit1" type="submit" value="Add to Checkout" />
+                    </div>
+                </td>
+                <td style="margin: auto; text-align: center; width: 50%">
+                    <h2>Items Added</h2>
+                    <table style="margin: auto; text-align: center; width: 50%">
+                        <tr>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                        </tr>
+                            @if (Model.ProductName != null)
+                            {
+                                <tr>
+                                <td>@Model.ProductName</td>
+                                <td>@Model.Quantity</td>
+                                <th>@Model.Price</th>
+                                    </tr>
+                            }
+                        
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+<script>
+    
+    $('#ddlProducts').on("change", function () {
+        var value = $("#ddlProducts :selected").text();
+        $('#hiddenProductSelectedName').val(value);
+        //console.log($('#hiddenProductSelectedName').val()); 
+    });
+    
+    //$(document).ready(function () {
+        //set initial state.
+        
+        //var arr = [];
+
+        //$('#chkIPD').change(function () {
+        //    if (this.checked) {
+        //        arr.push($(this).val());
+        //    }  
+        //});
+        //$('#chkMBP').change(function () {
+        //    if (this.checked) {
+        //        arr.push($(this).val());
+        //    }
+        //});
+        //$('#chkATV').change(function () {
+        //    if (this.checked) {
+        //        arr.push($(this).val());
+        //    }
+        //});
+        //$('#chkVGA').change(function () {
+        //    if (this.checked) {
+        //        arr.push($(this).val());
+        //    }
+        //});
+        
+        //$('#hiddenProductSelectedName').val(JSON.stringify(arr));
+        //console.log(arr);
+    //});
+    //$('#ddlProductsQty').on("change", function () {
+    //    var arr = [];
+    //    $('input:checkbox[id=chkIPD]:checked').each(function () {
+    //        arr.push($(this).val());
+    //    });
+    //    $('input:checkbox[id=chkMBP]:checked').each(function () {
+    //        arr.push($(this).val());
+    //    });
+    //    chkATV
+    //    $('input:checkbox[id=chkATV]:checked').each(function () {
+    //        arr.push($(this).val());
+    //    });
+    //    $('input:checkbox[id=chkVGA]:checked').each(function () {
+    //        arr.push($(this).val());
+    //    });
+        
+        
+    //});
+</script>
+
